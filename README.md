@@ -1,2 +1,2 @@
-# yt-instagram-ai creator
-YT AI based Instagram Creator
+YT N Instagram Creator
+YT N Instagram Creator
