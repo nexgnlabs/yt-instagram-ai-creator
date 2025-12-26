@@ -3,68 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thumbnail Architect Pro - Fixed</title>
+    <title>Thumbnail Architect v3.0 - Strategic Mode</title>
     <style>
         :root { --yt-red: #ff0000; --bg: #0a0a0a; --card: #1a1a1a; --accent: #00d4ff; --success: #00e676; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; padding: 20px; }
-        .app-shell { max-width: 800px; margin: auto; background: var(--card); border-radius: 12px; padding: 25px; border: 1px solid #333; }
+        .app-shell { max-width: 850px; margin: auto; background: var(--card); border-radius: 12px; padding: 25px; border: 1px solid #333; }
         
         .usage-bar { text-align: center; font-size: 12px; margin-bottom: 15px; color: #888; border-bottom: 1px solid #333; padding-bottom: 10px; }
         .usage-count { color: var(--success); font-weight: bold; }
 
-        input, textarea, select { width: 100%; padding: 12px; background: #000; border: 1px solid #444; border-radius: 8px; color: #fff; margin-top: 5px; box-sizing: border-box; }
         label { display: block; margin-top: 15px; font-size: 11px; color: #888; text-transform: uppercase; font-weight: bold; }
-
-        .btn { background: var(--yt-red); color: white; border: none; padding: 18px; width: 100%; border-radius: 10px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 20px; }
+        input, textarea, select { width: 100%; padding: 12px; background: #000; border: 1px solid #444; border-radius: 8px; color: #fff; margin-top: 5px; box-sizing: border-box; font-family: inherit; }
+        
+        .btn { background: var(--yt-red); color: white; border: none; padding: 18px; width: 100%; border-radius: 10px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 25px; }
         .btn:disabled { background: #444; cursor: not-allowed; }
 
-        .result-container { display: none; margin-top: 30px; }
-        .thumbnail-preview { 
-            width: 100%; aspect-ratio: 16/9; background: #111; border-radius: 10px; 
-            display: flex; align-items: center; justify-content: center; overflow: hidden; 
-            border: 2px solid var(--accent); position: relative; 
-        }
+        .result-container { display: none; margin-top: 30px; border-top: 1px solid #333; padding-top: 20px; }
+        .thumbnail-preview { width: 100%; aspect-ratio: 16/9; background: #111; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--accent); }
         .thumbnail-preview img { width: 100%; height: 100%; object-fit: cover; display: none; }
         
-        .placeholder-text { color: #555; font-weight: bold; text-align: center; padding: 20px; }
         .strategy-box { background: #000; padding: 20px; border-radius: 10px; border-left: 4px solid var(--accent); margin-top: 20px; font-size: 14px; line-height: 1.6; color: #ccc; }
         
-        #loader { display: none; text-align: center; color: var(--accent); margin-top: 20px; font-weight: bold; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.5; } }
+        #loader { display: none; text-align: center; color: var(--accent); margin-top: 20px; font-weight: bold; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 50% { opacity: 0.5; } }
     </style>
 </head>
 <body>
 
 <div class="app-shell">
-    <h2 style="text-align:center; margin-top:0; color: var(--yt-red);">🖼️ Thumbnail Architect v2.0</h2>
-    <div class="usage-bar">Daily Limit: <span id="used" class="usage-count">0</span> / 5</div>
+    <h2 style="text-align:center; margin-top:0; color: var(--yt-red);">🖼️ Thumbnail Architect v3.0</h2>
+    <div class="usage-bar">Daily Usage: <span id="used" class="usage-count">0</span> / 5 Concept Designs</div>
 
     <label>Gemini API Key</label>
     <input type="password" id="apiKey" placeholder="Paste your API key...">
 
-    <label>Video Topic</label>
-    <input type="text" id="topic" placeholder="e.g. My $10,000 Setup Tour">
+    <div style="display: flex; gap: 15px;">
+        <div style="flex: 1;">
+            <label>Video Topic</label>
+            <input type="text" id="topic" placeholder="e.g. iPhone 16 Pro Review">
+        </div>
+        <div style="flex: 1;">
+            <label>Visual Style</label>
+            <select id="style">
+                <option value="cinematic, 8k resolution, dramatic lighting">Cinematic</option>
+                <option value="high saturation, neon colors, MrBeast vibes">Viral / Hyper</option>
+                <option value="clean, minimalist, studio lighting">Minimalist</option>
+                <option value="dark, gritty, documentary style">Moody / Serious</option>
+            </select>
+        </div>
+    </div>
 
-    <label>Thumbnail Style</label>
-    <select id="style">
-        <option value="cinematic and high contrast">Cinematic</option>
-        <option value="bright colors and MrBeast style bold text">Viral/Bold</option>
-        <option value="minimalist and clean">Minimalist</option>
-        <option value="dark, mysterious and moody">Mysterious</option>
-    </select>
+    <label>Extra Details / Custom Cues</label>
+    <textarea id="extraNotes" rows="4" placeholder="Example: Show a shocked face on the left, a broken iPhone on the right. Use a glowing red background. Add 'SCAM' in big text."></textarea>
 
-    <button class="btn" id="genBtn" onclick="generate()">GENERATE DESIGN</button>
+    <button class="btn" id="genBtn" onclick="generate()">ARCHITECT THUMBNAIL</button>
 
-    <div id="loader">🎨 AI IS RENDERING YOUR CONCEPT...</div>
+    <div id="loader">⚡ GEMINI IS MASTERMINDING THE DESIGN...</div>
 
     <div id="result" class="result-container">
-        <div class="thumbnail-preview" id="previewFrame">
-            <div id="imgPlaceholder" class="placeholder-text">LOADING IMAGE...</div>
-            <img id="thumbImg" src="" alt="Thumbnail">
+        <label>Generated Visual Concept</label>
+        <div class="thumbnail-preview">
+            <img id="thumbImg" src="" alt="Thumbnail Preview">
+            <div id="imgPlaceholder" style="color: #444;">GENERATING IMAGE...</div>
         </div>
 
         <div class="strategy-box">
-            <h3 style="color:var(--accent); margin-top:0;">CTR Strategy (Hinglish)</h3>
+            <h3 style="color:var(--accent); margin-top:0;">CTR Logic (Hinglish)</h3>
             <div id="strategyText"></div>
         </div>
     </div>
@@ -74,44 +78,45 @@
     const MAX_DAILY = 5;
 
     window.onload = () => {
-        updateUI();
-        const key = localStorage.getItem('_th_key_v2');
+        updateUsageUI();
+        const key = localStorage.getItem('_th_v3_key');
         if (key) document.getElementById('apiKey').value = key;
     };
 
-    function updateUI() {
+    function updateUsageUI() {
         const usage = getUsage();
         document.getElementById('used').innerText = usage;
         if (usage >= MAX_DAILY) {
             const btn = document.getElementById('genBtn');
             btn.disabled = true;
-            btn.innerText = "LIMIT REACHED";
+            btn.innerText = "LIMIT REACHED (5/5)";
         }
     }
 
     function getUsage() {
         const date = new Date().toISOString().split('T')[0];
-        const data = JSON.parse(localStorage.getItem('_th_usage_v2') || '{}');
+        const data = JSON.parse(localStorage.getItem('_th_usage_v3') || '{}');
         return data[date] || 0;
     }
 
-    function trackUsage() {
+    function incrementUsage() {
         const date = new Date().toISOString().split('T')[0];
-        const data = JSON.parse(localStorage.getItem('_th_usage_v2') || '{}');
+        const data = JSON.parse(localStorage.getItem('_th_usage_v3') || '{}');
         data[date] = (data[date] || 0) + 1;
-        localStorage.setItem('_th_usage_v2', JSON.stringify(data));
-        updateUI();
+        localStorage.setItem('_th_usage_v3', JSON.stringify(data));
+        updateUsageUI();
     }
 
     async function generate() {
         const key = document.getElementById('apiKey').value.trim();
         const topic = document.getElementById('topic').value;
         const style = document.getElementById('style').value;
+        const extra = document.getElementById('extraNotes').value;
         
-        if (!key || !topic) return alert("Fill all fields!");
-        if (getUsage() >= MAX_DAILY) return alert("Bhai, daily limit over!");
+        if (!key || !topic) return alert("Bhai, Key aur Topic dono chahiye!");
+        if (getUsage() >= MAX_DAILY) return alert("Daily limit over!");
 
-        localStorage.setItem('_th_key_v2', key);
+        localStorage.setItem('_th_v3_key', key);
         const loader = document.getElementById('loader');
         const result = document.getElementById('result');
         const img = document.getElementById('thumbImg');
@@ -122,10 +127,13 @@
         img.style.display = "none";
         placeholder.style.display = "block";
 
-        const prompt = `Act as a Thumbnail Designer. Topic: "${topic}". Style: "${style}". 
-        1. Write a 2-line CTR strategy in Hinglish. 
-        2. Write a 5-word clean English prompt for a background image. 
-        Format: STRATEGY: [text] PROMPT: [text]`;
+        // Advanced Prompt with extra details
+        const prompt = `Act as a Viral Thumbnail Expert. Topic: "${topic}". Style: "${style}". 
+        Special User Instructions: "${extra}".
+        
+        1. STRATEGY: Create a 3-line CTR guide in Hinglish explaining where to put text/faces based on the extra instructions.
+        2. PROMPT: Create a clean, descriptive 15-word English prompt for the background image. 
+        Format strictly as STRATEGY: [text] PROMPT: [text]`;
 
         try {
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${key}`;
@@ -139,29 +147,28 @@
             const text = data.candidates[0].content.parts[0].text;
             
             const strategy = text.split('STRATEGY:')[1].split('PROMPT:')[0].trim();
-            const imgPrompt = text.split('PROMPT:')[1].trim().replace(/[^a-zA-Z ]/g, "");
+            const rawPrompt = text.split('PROMPT:')[1].trim();
+            
+            // Clean prompt for the image engine
+            const cleanImgPrompt = rawPrompt.replace(/[^a-zA-Z0-9 ]/g, "").substring(0, 150);
 
             document.getElementById('strategyText').innerText = strategy;
             
-            // Image Loading Logic
-            const finalImgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(imgPrompt)}?width=1280&height=720&nologo=true&seed=${Math.random()}`;
+            const seed = Math.floor(Math.random() * 99999);
+            const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanImgPrompt)}?width=1280&height=720&nologo=true&seed=${seed}`;
             
-            img.src = finalImgUrl;
+            img.src = imageUrl;
             img.onload = () => {
                 loader.style.display = "none";
                 result.style.display = "block";
                 img.style.display = "block";
                 placeholder.style.display = "none";
-                trackUsage();
-            };
-            img.onerror = () => {
-                loader.style.display = "none";
-                alert("Image engine busy. Try again in 5 seconds.");
+                incrementUsage();
             };
 
         } catch (err) {
             loader.style.display = "none";
-            alert("API Error. Check your Key.");
+            alert("API Error: " + err.message);
         }
     }
 </script>
