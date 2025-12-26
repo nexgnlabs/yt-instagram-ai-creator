@@ -3,76 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thumbnail Architect Pro - 2025 Edition</title>
+    <title>Thumbnail Architect Pro - Fixed</title>
     <style>
         :root { --yt-red: #ff0000; --bg: #0a0a0a; --card: #1a1a1a; --accent: #00d4ff; --success: #00e676; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; padding: 20px; }
-        .app-shell { max-width: 900px; margin: auto; background: var(--card); border-radius: 12px; padding: 25px; border: 1px solid #333; }
+        .app-shell { max-width: 800px; margin: auto; background: var(--card); border-radius: 12px; padding: 25px; border: 1px solid #333; }
         
         .usage-bar { text-align: center; font-size: 12px; margin-bottom: 15px; color: #888; border-bottom: 1px solid #333; padding-bottom: 10px; }
         .usage-count { color: var(--success); font-weight: bold; }
 
-        .api-setup { background: #000; padding: 15px; border-radius: 8px; border: 1px dashed #444; margin-bottom: 20px; }
-        .api-setup input { width: 100%; padding: 10px; background: #111; border: 1px solid #333; color: #fff; border-radius: 5px; margin-top: 5px; box-sizing: border-box; }
-
+        input, textarea, select { width: 100%; padding: 12px; background: #000; border: 1px solid #444; border-radius: 8px; color: #fff; margin-top: 5px; box-sizing: border-box; }
         label { display: block; margin-top: 15px; font-size: 11px; color: #888; text-transform: uppercase; font-weight: bold; }
-        input, textarea { width: 100%; padding: 12px; background: #000; border: 1px solid #444; border-radius: 8px; color: #fff; margin-top: 5px; box-sizing: border-box; }
-        
-        .btn { background: var(--yt-red); color: white; border: none; padding: 18px; width: 100%; border-radius: 10px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 20px; transition: 0.3s; }
-        .btn:hover { background: #cc0000; transform: scale(1.01); }
+
+        .btn { background: var(--yt-red); color: white; border: none; padding: 18px; width: 100%; border-radius: 10px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 20px; }
         .btn:disabled { background: #444; cursor: not-allowed; }
 
-        .result-container { display: none; margin-top: 30px; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .thumbnail-preview { width: 100%; aspect-ratio: 16/9; background: #222; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--accent); position: relative; }
-        .thumbnail-preview img { width: 100%; height: 100%; object-fit: cover; }
-        .overlay-info { background: rgba(0,0,0,0.8); padding: 20px; border-radius: 10px; border-left: 4px solid var(--accent); margin-top: 20px; }
+        .result-container { display: none; margin-top: 30px; }
+        .thumbnail-preview { 
+            width: 100%; aspect-ratio: 16/9; background: #111; border-radius: 10px; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden; 
+            border: 2px solid var(--accent); position: relative; 
+        }
+        .thumbnail-preview img { width: 100%; height: 100%; object-fit: cover; display: none; }
         
-        #loader { display: none; text-align: center; color: var(--accent); margin-top: 20px; font-weight: bold; }
-        .error-msg { color: #ffbb00; background: #332200; padding: 15px; border-radius: 8px; border: 1px solid #ffbb00; text-align: center; margin-top: 15px; display: none; }
+        .placeholder-text { color: #555; font-weight: bold; text-align: center; padding: 20px; }
+        .strategy-box { background: #000; padding: 20px; border-radius: 10px; border-left: 4px solid var(--accent); margin-top: 20px; font-size: 14px; line-height: 1.6; color: #ccc; }
+        
+        #loader { display: none; text-align: center; color: var(--accent); margin-top: 20px; font-weight: bold; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; } }
     </style>
 </head>
 <body>
 
 <div class="app-shell">
-    <h2 style="text-align:center; margin-top:0; color: var(--yt-red);">🖼️ Thumbnail Architect Pro</h2>
-    
-    <div class="usage-bar">Daily Usage: <span id="used" class="usage-count">0</span> / 5 Concept Designs</div>
+    <h2 style="text-align:center; margin-top:0; color: var(--yt-red);">🖼️ Thumbnail Architect v2.0</h2>
+    <div class="usage-bar">Daily Limit: <span id="used" class="usage-count">0</span> / 5</div>
 
-    <div class="api-setup">
-        <label>Gemini API Key</label>
-        <input type="password" id="apiKey" placeholder="Paste your API key...">
-    </div>
+    <label>Gemini API Key</label>
+    <input type="password" id="apiKey" placeholder="Paste your API key...">
 
     <label>Video Topic</label>
-    <input type="text" id="topic" placeholder="e.g. How I made 1 Lakh in 30 days">
+    <input type="text" id="topic" placeholder="e.g. My $10,000 Setup Tour">
 
     <label>Thumbnail Style</label>
-    <select id="style" style="width:100%; padding:12px; background:#000; color:#fff; border:1px solid #444; border-radius:8px; margin-top:5px;">
-        <option value="MrBeast Style (High Saturation, Emotional Face)">MrBeast Style</option>
-        <option value="Minimalist (Clean Typography, One Object)">Minimalist</option>
-        <option value="Storytelling (Before/After, Comparison)">Comparison / Story</option>
-        <option value="Tech/Review (Product Close-up, Glow)">Tech Review</option>
+    <select id="style">
+        <option value="cinematic and high contrast">Cinematic</option>
+        <option value="bright colors and MrBeast style bold text">Viral/Bold</option>
+        <option value="minimalist and clean">Minimalist</option>
+        <option value="dark, mysterious and moody">Mysterious</option>
     </select>
 
-    <label>Key Elements to Include</label>
-    <textarea id="notes" rows="3" placeholder="e.g. My face on the left, a bag of money on the right, red background..."></textarea>
+    <button class="btn" id="genBtn" onclick="generate()">GENERATE DESIGN</button>
 
-    <button class="btn" id="genBtn" onclick="generateThumbnail()">ARCHITECT THUMBNAIL</button>
-
-    <div id="loader">🎨 GEMINI IS DESIGNING THE PERFECT LAYOUT...</div>
-    <div id="errorBox" class="error-msg"></div>
+    <div id="loader">🎨 AI IS RENDERING YOUR CONCEPT...</div>
 
     <div id="result" class="result-container">
-        <label>Visual Concept Preview</label>
-        <div class="thumbnail-preview">
-            <img id="thumbImg" src="" alt="Thumbnail Preview">
+        <div class="thumbnail-preview" id="previewFrame">
+            <div id="imgPlaceholder" class="placeholder-text">LOADING IMAGE...</div>
+            <img id="thumbImg" src="" alt="Thumbnail">
         </div>
 
-        <div class="overlay-info">
-            <h3 style="color: var(--accent); margin-top: 0;">AI Design Strategy</h3>
-            <div id="designStrategy" style="font-size: 14px; color: #ccc; line-height: 1.6;"></div>
+        <div class="strategy-box">
+            <h3 style="color:var(--accent); margin-top:0;">CTR Strategy (Hinglish)</h3>
+            <div id="strategyText"></div>
         </div>
     </div>
 </div>
@@ -81,64 +74,58 @@
     const MAX_DAILY = 5;
 
     window.onload = () => {
-        updateUsageUI();
-        const savedKey = localStorage.getItem('_thumb_v1_key');
-        if (savedKey) document.getElementById('apiKey').value = savedKey;
+        updateUI();
+        const key = localStorage.getItem('_th_key_v2');
+        if (key) document.getElementById('apiKey').value = key;
     };
 
-    function updateUsageUI() {
+    function updateUI() {
         const usage = getUsage();
         document.getElementById('used').innerText = usage;
         if (usage >= MAX_DAILY) {
             const btn = document.getElementById('genBtn');
             btn.disabled = true;
-            btn.innerText = "DAILY LIMIT REACHED (5/5)";
+            btn.innerText = "LIMIT REACHED";
         }
     }
 
     function getUsage() {
         const date = new Date().toISOString().split('T')[0];
-        const data = JSON.parse(localStorage.getItem('_thumb_usage_log') || '{}');
+        const data = JSON.parse(localStorage.getItem('_th_usage_v2') || '{}');
         return data[date] || 0;
     }
 
     function trackUsage() {
         const date = new Date().toISOString().split('T')[0];
-        const data = JSON.parse(localStorage.getItem('_thumb_usage_log') || '{}');
+        const data = JSON.parse(localStorage.getItem('_th_usage_v2') || '{}');
         data[date] = (data[date] || 0) + 1;
-        localStorage.setItem('_thumb_usage_log', JSON.stringify(data));
-        updateUsageUI();
+        localStorage.setItem('_th_usage_v2', JSON.stringify(data));
+        updateUI();
     }
 
-    async function generateThumbnail() {
+    async function generate() {
         const key = document.getElementById('apiKey').value.trim();
         const topic = document.getElementById('topic').value;
         const style = document.getElementById('style').value;
-        const notes = document.getElementById('notes').value;
         
+        if (!key || !topic) return alert("Fill all fields!");
+        if (getUsage() >= MAX_DAILY) return alert("Bhai, daily limit over!");
+
+        localStorage.setItem('_th_key_v2', key);
         const loader = document.getElementById('loader');
-        const errorBox = document.getElementById('errorBox');
         const result = document.getElementById('result');
-
-        if (getUsage() >= MAX_DAILY) return alert("Bhai, daily limit over. Come back tomorrow!");
-        if (!key || !topic) return alert("Please enter API Key and Topic!");
-
-        localStorage.setItem('_thumb_v1_key', key);
-        loader.style.display = 'block';
-        result.style.display = 'none';
-        errorBox.style.display = 'none';
-
-        const prompt = `Act as a Professional YouTube Thumbnail Designer. 
-        Video Topic: "${topic}". 
-        Desired Style: ${style}. 
-        User Notes: ${notes}.
-
-        TASK:
-        1. Create a "Strategy" in Hinglish explaining what text and images to use for high CTR.
-        2. Create a "Visual_Prompt" (English) for an image generator to create the background.
+        const img = document.getElementById('thumbImg');
+        const placeholder = document.getElementById('imgPlaceholder');
         
-        Output format ONLY JSON:
-        {"strategy": "...", "visual_prompt": "..."}`;
+        loader.style.display = "block";
+        result.style.display = "none";
+        img.style.display = "none";
+        placeholder.style.display = "block";
+
+        const prompt = `Act as a Thumbnail Designer. Topic: "${topic}". Style: "${style}". 
+        1. Write a 2-line CTR strategy in Hinglish. 
+        2. Write a 5-word clean English prompt for a background image. 
+        Format: STRATEGY: [text] PROMPT: [text]`;
 
         try {
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${key}`;
@@ -149,32 +136,32 @@
             });
 
             const data = await response.json();
+            const text = data.candidates[0].content.parts[0].text;
+            
+            const strategy = text.split('STRATEGY:')[1].split('PROMPT:')[0].trim();
+            const imgPrompt = text.split('PROMPT:')[1].trim().replace(/[^a-zA-Z ]/g, "");
 
-            if (response.status === 429) {
-                errorBox.innerText = "Bhai, this is your current limit for the day. Come back tomorrow after 24 hours!";
-                errorBox.style.display = "block";
-            } else if (data.candidates) {
-                let text = data.candidates[0].content.parts[0].text;
-                const jsonStr = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
-                const designData = JSON.parse(jsonStr);
-
-                // Use a free image generator URL based on AI's prompt
-                const seed = Math.floor(Math.random() * 10000);
-                const imageUrl = `https://pollinations.ai/p/${encodeURIComponent(designData.visual_prompt)}?width=1280&height=720&seed=${seed}&nologo=true`;
-
-                document.getElementById('thumbImg').src = imageUrl;
-                document.getElementById('designStrategy').innerText = designData.strategy;
-                
-                result.style.display = 'block';
+            document.getElementById('strategyText').innerText = strategy;
+            
+            // Image Loading Logic
+            const finalImgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(imgPrompt)}?width=1280&height=720&nologo=true&seed=${Math.random()}`;
+            
+            img.src = finalImgUrl;
+            img.onload = () => {
+                loader.style.display = "none";
+                result.style.display = "block";
+                img.style.display = "block";
+                placeholder.style.display = "none";
                 trackUsage();
-            } else {
-                throw new Error("API Issue. Please check your key.");
-            }
+            };
+            img.onerror = () => {
+                loader.style.display = "none";
+                alert("Image engine busy. Try again in 5 seconds.");
+            };
+
         } catch (err) {
-            errorBox.innerText = "Error: " + err.message;
-            errorBox.style.display = "block";
-        } finally {
-            loader.style.display = 'none';
+            loader.style.display = "none";
+            alert("API Error. Check your Key.");
         }
     }
 </script>
