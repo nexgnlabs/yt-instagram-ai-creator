@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Reels & YT Shorts Generator Pro</title>
+    <title>Instagram Reels & YT Shorts Script Generator Pro</title>
     <style>
         :root { --ig-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); --bg: #0a0a0a; --card: #1a1a1a; --accent: #00d4ff; --success: #00e676; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; padding: 20px; line-height: 1.5; }
@@ -33,7 +33,7 @@
 <body>
 
 <div class="app-shell">
-    <h1 style="text-align:center; margin-top:0; background: var(--ig-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Instagram Reel Architect</h1>
+    <h1 style="text-align:center; margin-top:0; background: var(--ig-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Instagram Reels & YT Shorts Script Generator Pro</h1>
     <div class="usage-bar">Daily Usage: <span id="used" class="usage-count">0</span> / 5 Viral Scripts</div>
 
     <label>Gemini API Key</label>
@@ -102,30 +102,21 @@
             </select>
         </div>
         <div>
-            <label>Regional Language</label>
+            <label>Language Style</label>
             <select id="lang">
-                <option value="Simple day to day Hindi (Northern India style)">Hindi (Simple)</option>
-                <option value="Day to day Haryanvi (Desi style)">Haryanvi</option>
-                <option value="Simple day to day Marathi (Maharashtra style)">Marathi</option>
-                <option value="Simple day to day Gujarati (Gujarat style)">Gujarati</option>
-                <option value="Simple day to day Bengali (West Bengal style)">Bengali</option>
-                <option value="Simple day to day Assamese (Assam style)">Assamese</option>
-                <option value="Simple day to day Punjabi (Punjab style)">Punjabi</option>
-                <option value="Simple day to day Tamil (Tamil Nadu style)">Tamil</option>
-                <option value="Simple day to day Telugu (Telangana/AP style)">Telugu</option>
-                <option value="Simple day to day Kannada (Karnataka style)">Kannada</option>
-                <option value="Simple day to day Malayalam (Kerala style)">Malayalam</option>
-                <option value="English (Conversational)">English</option>
+                <option value="Day-to-day Hinglish (Natural mix of Hindi and English)">Hinglish</option>
+                <option value="Simple day-to-day Hindi (Conversational style)">Simple Hindi</option>
+                <option value="Simple day-to-day English (Global style)">English</option>
             </select>
         </div>
     </div>
 
-    <label>What is the specific topic/detail for this Reel?</label>
+    <label>What is the specific topic/detail for this script?</label>
     <textarea id="details" rows="4" placeholder="Example: 3 simple morning habits for high energy..."></textarea>
 
-    <button class="btn" id="genBtn" onclick="generateReel()">ARCHITECT VIRAL REEL</button>
+    <button class="btn" id="genBtn" onclick="generateReel()">ARCHITECT VIRAL SCRIPT</button>
 
-    <div id="loader">🚀 ANALYZING HOOKS & LOCAL DIALECTS...</div>
+    <div id="loader">🚀 ANALYZING HOOKS & TRENDING STYLES...</div>
     <div id="errorBox" class="error-msg"></div>
 
     <div id="results" class="result-section">
@@ -194,13 +185,13 @@
         results.style.display = 'none';
         errorBox.style.display = 'none';
 
-        const prompt = `Act as a Viral Content Creator for Instagram. 
+        const prompt = `Act as a Viral Content Creator for Instagram and YouTube. 
         Category: "${cat}". Duration: ${dur}. Language Style: ${lang}. 
         Details: "${details}".
 
         RULES:
         1. Script must be in ${lang} using simple, day-to-day spoken words.
-        2. NO complex or formal grammar. Use local slang where natural.
+        2. NO formal grammar. Make it sound like a conversation between friends.
         3. Structure: Strong Hook (0-3s), High-Value Body, and Clear CTA.
         4. Provide an SEO-rich caption and 10 viral hashtags.
 
